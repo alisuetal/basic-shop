@@ -1,54 +1,28 @@
-// ignore_for_file: use_key_in_widget_constructors
 import 'package:flutter/Material.dart';
-import 'package:shop/data/favorite.dart';
+import 'package:provider/provider.dart';
 import 'package:shop/models/product.dart';
-
 import '../utils/app_routes.dart';
 
-class ProductWidget extends StatefulWidget {
-  final Product product;
+class ProductWidget extends StatelessWidget {
+  const ProductWidget({Key? key}) : super(key: key);
 
-  const ProductWidget(this.product);
-
-  @override
-  State<ProductWidget> createState() => _ProductWidgetState();
-}
-
-class _ProductWidgetState extends State<ProductWidget> {
   void _selectProduct(BuildContext context, Product product) {
     Navigator.of(context)
-        .pushNamed(AppRoutes.PRODUCT_DETAIL, arguments: product)
-        .then((result) {
-      setState(() {});
-    });
-  }
-
-  bool _isFavorite = false;
-
-  void _setFavorite(Product product) {
-    if (_isFavorite) {
-      setState(() {
-        FavoriteProducts.removeProduct(product);
-      });
-    } else {
-      setState(() {
-        FavoriteProducts.addProduct(product);
-      });
-    }
+        .pushNamed(AppRoutes.PRODUCT_DETAIL, arguments: product);
   }
 
   @override
   Widget build(BuildContext context) {
-    _isFavorite = FavoriteProducts.checkProduct(widget.product);
+    final product = Provider.of<Product>(context, listen: false);
     return GestureDetector(
-      onTap: () => _selectProduct(context, widget.product),
+      onTap: () => _selectProduct(context, product),
       child: Container(
         child: Column(
           children: [
             Stack(children: [
               ClipRRect(
                 child: Image.network(
-                  widget.product.imageUrl,
+                  product.imageUrl,
                   // width: double.infinity,
                   fit: BoxFit.fitWidth,
                   // height: 156,
@@ -69,7 +43,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                     children: [
                       Flexible(
                         child: Text(
-                          'R\$ ' + widget.product.price.toString(),
+                          'R\$ ' + product.price.toString(),
                           style: TextStyle(
                             fontSize: 14,
                             fontFamily: "Mirage",
@@ -80,11 +54,15 @@ class _ProductWidgetState extends State<ProductWidget> {
                           overflow: TextOverflow.fade,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () => _setFavorite(widget.product),
-                        child: Icon(
-                          _isFavorite ? Icons.favorite : Icons.favorite_border,
-                          size: 18,
+                      Consumer<Product>(
+                        builder: (context, product, _) => GestureDetector(
+                          onTap: () => product.toggleFavorite(),
+                          child: Icon(
+                            product.isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            size: 18,
+                          ),
                         ),
                       )
                     ],
@@ -93,7 +71,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                     children: [
                       Flexible(
                         child: Text(
-                          widget.product.title,
+                          product.title,
                           style: const TextStyle(
                             fontSize: 22,
                             fontFamily: "Mirage",
@@ -112,7 +90,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                     children: [
                       Flexible(
                         child: Text(
-                          widget.product.description,
+                          product.description,
                           style: const TextStyle(
                             fontSize: 14,
                           ),

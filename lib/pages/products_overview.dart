@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:shop/components/app_bar.dart';
-import 'package:shop/components/product.dart';
-import 'package:shop/data/dummy_data.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:shop/components/product_grid.dart';
 
-class ProductsOverView extends StatelessWidget {
-  const ProductsOverView({Key? key}) : super(key: key);
+class ProductsOverView extends StatefulWidget {
+  final bool onlyFavorites;
+  const ProductsOverView({Key? key, required this.onlyFavorites})
+      : super(key: key);
+
+  @override
+  State<ProductsOverView> createState() => _ProductsOverViewState();
+}
+
+class _ProductsOverViewState extends State<ProductsOverView> {
+  void _refreshPage() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +30,8 @@ class ProductsOverView extends StatelessWidget {
           child: Column(
             children: [
               const AppBarWidget(title: "Shop", backButton: false),
-              MasonryGridView.count(
-                crossAxisCount: 2,
-                mainAxisSpacing: 20,
-                crossAxisSpacing: 20,
-                itemCount: dummyData.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return ProductWidget(dummyData[index]);
-                },
+              ProductGrid(
+                onlyFavorites: widget.onlyFavorites,
               ),
             ],
           ),

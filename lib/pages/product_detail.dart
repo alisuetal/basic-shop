@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shop/data/favorite.dart';
 import 'package:shop/models/product.dart';
+
+import '../utils/app_routes.dart';
 
 class ProductDetail extends StatefulWidget {
   const ProductDetail({Key? key}) : super(key: key);
@@ -10,24 +11,22 @@ class ProductDetail extends StatefulWidget {
 }
 
 class _ProductDetailState extends State<ProductDetail> {
-  bool _isFavorite = false;
+  void _addToCart(BuildContext context, Product product) {
+    Navigator.of(context).pushNamed(
+      AppRoutes.ADD_TO_CART,
+      arguments: product,
+    );
+  }
 
-  void _setFavorite(Product product) {
-    if (_isFavorite) {
-      setState(() {
-        FavoriteProducts.removeProduct(product);
-      });
-    } else {
-      setState(() {
-        FavoriteProducts.addProduct(product);
-      });
-    }
+  void _refreshPage(Product product) {
+    setState(() {
+      product.toggleFavorite();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final product = ModalRoute.of(context)?.settings.arguments as Product;
-    _isFavorite = FavoriteProducts.checkProduct(product);
 
     return Scaffold(
       backgroundColor: const Color(0xFFEBEBEB),
@@ -38,7 +37,6 @@ class _ProductDetailState extends State<ProductDetail> {
               padding: const EdgeInsets.only(top: 20),
               child: Column(
                 children: [
-                  // AppBarWidget(title: product.title, backButton: true),
                   Stack(
                     children: [
                       Image.network(
@@ -127,12 +125,12 @@ class _ProductDetailState extends State<ProductDetail> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () => _setFavorite(product),
+                              onTap: () => _refreshPage(product),
                               child: Container(
                                 height: 40,
                                 width: 40,
                                 child: Icon(
-                                  _isFavorite
+                                  product.isFavorite
                                       ? Icons.favorite
                                       : Icons.favorite_border,
                                   color: Colors.white,
@@ -164,37 +162,40 @@ class _ProductDetailState extends State<ProductDetail> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Container(
-                      height: 56,
-                      width: 125,
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.shopping_bag,
-                              size: 24,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: 12,
-                            ),
-                            Text(
-                              "Shop now",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: "Mirage",
-                                fontWeight: FontWeight.w600,
+                    GestureDetector(
+                      onTap: () => _addToCart(context, product),
+                      child: Container(
+                        height: 56,
+                        width: 125,
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.shopping_bag,
+                                size: 24,
                                 color: Colors.white,
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                width: 12,
+                              ),
+                              Text(
+                                "Shop now",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: "Mirage",
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(16)),
+                        ),
                       ),
                     )
                   ],
