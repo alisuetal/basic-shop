@@ -15,14 +15,14 @@ class ButtonSubmit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onSubmit,
+      onTap: enabled ? onSubmit : () {},
       child: Container(
         width: double.infinity,
         height: 64,
         child: Center(
           child: Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: "Mirage",
               fontWeight: FontWeight.w700,
               fontSize: 22,
@@ -33,8 +33,8 @@ class ButtonSubmit extends StatelessWidget {
         decoration: BoxDecoration(
           color: enabled
               ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).colorScheme.primary.withOpacity(0.4),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
+              : Theme.of(context).colorScheme.primary.withOpacity(0.3),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
         ),
       ),
     );

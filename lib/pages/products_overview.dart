@@ -4,7 +4,9 @@ import 'package:shop/components/product_grid.dart';
 
 class ProductsOverView extends StatefulWidget {
   final bool onlyFavorites;
-  const ProductsOverView({Key? key, required this.onlyFavorites})
+  final String title;
+  const ProductsOverView(
+      {Key? key, required this.onlyFavorites, required this.title})
       : super(key: key);
 
   @override
@@ -12,10 +14,6 @@ class ProductsOverView extends StatefulWidget {
 }
 
 class _ProductsOverViewState extends State<ProductsOverView> {
-  void _refreshPage() {
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +27,7 @@ class _ProductsOverViewState extends State<ProductsOverView> {
           ),
           child: Column(
             children: [
-              const AppBarWidget(title: "Shop", backButton: false),
+              AppBarWidget(title: widget.title, backButton: false),
               ProductGrid(
                 onlyFavorites: widget.onlyFavorites,
               ),

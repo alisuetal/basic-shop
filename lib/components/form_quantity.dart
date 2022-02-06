@@ -6,10 +6,10 @@ import 'package:shop/models/cart.dart';
 import 'package:shop/models/product.dart';
 
 class FormQuantity extends StatefulWidget {
-  int quantity;
+  final int quantity;
   final Product product;
 
-  FormQuantity({
+  const FormQuantity({
     Key? key,
     required this.quantity,
     required this.product,

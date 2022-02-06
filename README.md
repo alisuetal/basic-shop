@@ -7,16 +7,16 @@
 
 The project will be under development while the taks below are not completed.
 
-- [ ] Add functional cart;
-- [ ] Add cart screen;
-- [ ] Add checkout screen;
-- [ ] Add purchases history;
-- [ ] Add purchases screen;
+- [x] Add functional cart;
+- [x] Add cart screen;
+- [x] Add checkout screen;
+- [x] Add purchases history;
+- [x] Add purchases screen;
 
 ## 💻 Requirements
 
 **Development:**<br>
-The app is being developed with flutter 2.10, and Dart 2.16.
+The app was developed with flutter 2.10, and Dart 2.16.
 
 **APK usage:**<br>
 Generated APKs will be built with API 19+ (Android 4.4+) support. Previous Android versions are not supported.

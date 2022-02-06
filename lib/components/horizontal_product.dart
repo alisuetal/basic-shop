@@ -26,7 +26,7 @@ class HorizontalProduct extends StatelessWidget {
           Flexible(
             flex: 3,
             child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop/components/navigation_bar_icons.dart';
+import 'package:shop/pages/cart.dart';
+import 'package:shop/pages/order.dart';
 import 'package:shop/pages/products_overview.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -13,10 +15,10 @@ class _TabsScreenState extends State<TabsScreen> {
   int _selectedScreenIndex = 0;
 
   late final List<Widget> _screens = [
-    const ProductsOverView(onlyFavorites: false),
-    const ProductsOverView(onlyFavorites: true),
-    const ProductsOverView(onlyFavorites: true),
-    const ProductsOverView(onlyFavorites: true),
+    const ProductsOverView(title: "Shop", onlyFavorites: false),
+    const ProductsOverView(title: "Favorites", onlyFavorites: true),
+    const CartPage(),
+    const OrderPage(),
   ];
 
   _selectScreen(int index) {
@@ -35,7 +37,7 @@ class _TabsScreenState extends State<TabsScreen> {
             child: _screens[_selectedScreenIndex],
           ),
           Container(
-            height: 74,
+            height: 72,
             width: double.infinity,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
@@ -77,7 +79,7 @@ class _TabsScreenState extends State<TabsScreen> {
                     NavBarIcon(
                       icon: Icons.history_rounded,
                       inactiveIcon: Icons.history_rounded,
-                      label: "History",
+                      label: "Orders",
                       labelOnActive: true,
                       darkMode: false,
                       active: (_selectedScreenIndex == 3),

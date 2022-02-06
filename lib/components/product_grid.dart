@@ -27,7 +27,7 @@ class ProductGrid extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
                 Text(
-                  "Nothing here yet. :(",
+                  "Nothing here yet.",
                   style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
